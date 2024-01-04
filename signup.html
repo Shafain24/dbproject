@@ -10,9 +10,12 @@
     />
   </head>
   <body>
-    <div id="form-container">
-      <h2>Signup</h2>
+    <div
+      id="form-container"
+      style="display: flex; justify-content: center; margin-top: 110px"
+    >
       <form action="signin.php" method="post">
+        <h2>Signup</h2>
         <label for="username">Username:</label>
         <input type="text" name="username" id="username" required />
         <label for="password">Password:</label>
@@ -20,9 +23,8 @@
         <label for="cpassword">Confirm Password:</label>
         <input type="password" name="cpassword" id="cpassword" required />
         <button type="submit">Enter</button>
+        <div><a href="login.html">Already have an account?</a></div>
       </form>
     </div>
-
-    <div><a href="login.html">Already have an account?</a></div>
   </body>
 </html>
