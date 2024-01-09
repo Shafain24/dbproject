@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
-$dbname = "dbproject";
+$dbname = "complainProject";
 $username = "root";
 $password = "";
 
@@ -11,29 +11,24 @@ if (mysqli_connect_error()) {
 }
 
 // Check if the form is submitted using POST
-// ... (previous code)
-
-// Check if the form is submitted using POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
+    $roll_no = $_POST["roll_no"];
     $password = $_POST["password"];
 
-    // Hash the password
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-    $sql = "SELECT * FROM user_info WHERE username='$username'";
+    $sql = "SELECT * FROM user_accounts WHERE Roll_No='$roll_no'";
     $result = mysqli_query($conn, $sql);
 
     if ($row = mysqli_fetch_assoc($result)) {
         // Compare the entered password with the stored hashed password
         if (password_verify($password, $row['Password'])) {
             // Successful login, redirect to main page
-            header("Location: trial.html");
+            header("Location: dashboard.html");
+            exit(); // Important to exit after redirection
         } else {
-            echo "Incorrect password. <a href='login.php'>Try again</a>.";
+            echo "Incorrect password. <a href='login.html'>Try again</a>.";
         }
     } else {
-        echo "User not found. <a href='register.php'>Register here</a>.";
+        echo "User not found. <a href='signup.html'>Register here</a>.";
     }
 }
 
