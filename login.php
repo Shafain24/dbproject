@@ -21,7 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($row = mysqli_fetch_assoc($result)) {
         // Compare the entered password with the stored hashed password
         if (password_verify($password, $row['Password'])) {
-            // Successful login, redirect to main page
+            // Successful login, start session, set session variable, and redirect
+            session_start();
+            $_SESSION['roll_no'] = $roll_no;
             header("Location: dashboard.php");
             exit(); // Important to exit after redirection
         } else {

@@ -52,7 +52,7 @@ $conn->close();
       <!-- Sidebar -->
       <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
         <div class="position-sticky">
-          <ul class="nav flex-column">
+          <ul class="nav flex-column ">
             <li class="nav-item">
               <a class="nav-link" href="dashboard.php"> Home </a>
             </li>
@@ -60,7 +60,7 @@ $conn->close();
               <a class="nav-link active" href="#"> View Complaints </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"> Pending Complaints </a>
+              <a class="nav-link " href="#"> Pending Complaints </a>
             </li>
 
             <!-- Add more sidebar options as needed -->
@@ -85,6 +85,7 @@ $conn->close();
         </div>
 
         <!-- Display search results -->
+        <!-- Display search results -->
         <div class="row">
           <?php
           if ($result->num_rows > 0) {
@@ -97,6 +98,10 @@ $conn->close();
               echo '<p class="card-text">Device Type: ' . $row['Device_Type'] . '</p>';
               echo '<p class="card-text">Location: ' . $row['Location'] . '</p>';
               // You can add more fields here
+
+              // Complain button
+              echo '<a href="complainform.php?device_id=' . $row['Device_ID'] . '" class="btn btn-primary">File a Complaint</a>';
+
               echo '</div>';
               echo '</div>';
               echo '</div>';
@@ -106,6 +111,10 @@ $conn->close();
           }
           ?>
         </div>
+
+
+
+
       </main>
     </div>
   </div>
