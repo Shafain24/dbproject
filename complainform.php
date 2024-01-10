@@ -29,13 +29,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $complaint_type = $_POST["complaint_type"];
     $complaint_details = $_POST["complaint_details"];
 
+    // Generate a unique 5-digit Complaint_ID
+    $complaint_id = sprintf('%05d', rand(1, 99999));
+
     // Insert the complaint into the database
-    $sql = "INSERT INTO complaints (roll_no, device_id, complaint_type, complaint_details, status) VALUES ('$user_roll_no', '$device_id', '$complaint_type', '$complaint_details', 'Pending')";
+    $sql = "INSERT INTO user_complaints (Roll_No, Device_ID, Complaint_Type, Complaint_Issue, Status, Complaint_ID) VALUES ('$user_roll_no', '$device_id', '$complaint_type', '$complaint_details', 'Pending', '$complaint_id')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Complaint filed successfully.";
+        $success_message = "Complaint filed successfully. Your Complaint ID is: $complaint_id. Please use this ID to check the status.";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        $error_message = "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
@@ -60,6 +63,14 @@ $conn->close();
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h2 class="mb-4">File a Complaint</h2>
+
+                <?php
+                if (isset($success_message)) {
+                    echo '<div class="alert alert-success" role="alert">' . $success_message . '</div>';
+                } elseif (isset($error_message)) {
+                    echo '<div class="alert alert-danger" role="alert">' . $error_message . '</div>';
+                }
+                ?>
 
                 <form method="POST" action="">
                     <div class="mb-3">
