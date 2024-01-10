@@ -12,8 +12,14 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch device data from the database
-$sql = "SELECT Device_ID, Model, Device_Type, Location FROM LabComputers";
+// Initialize search variable
+$searchDeviceID = isset($_GET['searchDeviceID']) ? $_GET['searchDeviceID'] : '';
+
+// Fetch device data from the database based on search
+$sql = "SELECT * FROM labcomputers";
+if (!empty($searchDeviceID)) {
+  $sql .= " WHERE Device_ID LIKE '%$searchDeviceID%'";
+}
 $result = $conn->query($sql);
 
 // Close the database connection
@@ -48,11 +54,15 @@ $conn->close();
         <div class="position-sticky">
           <ul class="nav flex-column">
             <li class="nav-item">
+              <a class="nav-link" href="dashboard.php"> Home </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link active" href="#"> View Complaints </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#"> Pending Complaints </a>
             </li>
+
             <!-- Add more sidebar options as needed -->
           </ul>
         </div>
@@ -66,39 +76,36 @@ $conn->close();
 
         <!-- Search bar -->
         <div class="mb-3">
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search by product name" aria-label="Search" />
+          <form class="d-flex" method="GET">
+            <input class="form-control me-2" type="search" placeholder="Search by Device ID" aria-label="Search" name="searchDeviceID" value="<?php echo $searchDeviceID; ?>" />
             <button class="btn btn-outline-success" type="submit">
               Search
             </button>
           </form>
         </div>
 
-        <!-- Display device data -->
-        <?php
-        // Display device data
-        if ($result->num_rows > 0) {
-          echo '<div class="row">';
-          while ($row = $result->fetch_assoc()) {
-            echo '<div class="col-md-4 mb-4">';
-            echo '<div class="card">';
-            echo '<div class="card-body">';
-            echo '<h5 class="card-title">Device ID: ' . $row['Device_ID'] . '</h5>';
-            echo '<p class="card-text">Model: ' . $row['Model'] . '</p>';
-            echo '<p class="card-text">Device Type: ' . $row['Device_Type'] . '</p>';
-            echo '<p class="card-text">Location: ' . $row['Location'] . '</p>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
+        <!-- Display search results -->
+        <div class="row">
+          <?php
+          if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+              echo '<div class="col-md-4 mb-4">';
+              echo '<div class="card">';
+              echo '<div class="card-body">';
+              echo '<h5 class="card-title">Device ID: ' . $row['Device_ID'] . '</h5>';
+              echo '<p class="card-text">Model: ' . $row['Model'] . '</p>';
+              echo '<p class="card-text">Device Type: ' . $row['Device_Type'] . '</p>';
+              echo '<p class="card-text">Location: ' . $row['Location'] . '</p>';
+              // You can add more fields here
+              echo '</div>';
+              echo '</div>';
+              echo '</div>';
+            }
+          } else {
+            echo '<p>No devices found.</p>';
           }
-          echo '</div>';
-        } else {
-          echo '<p>No devices found.</p>';
-        }
-
-        ?>
-
-        <!-- Content specific to the user dashboard goes here -->
+          ?>
+        </div>
       </main>
     </div>
   </div>
