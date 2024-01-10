@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Compare the entered password with the stored hashed password
         if (password_verify($password, $row['Password'])) {
             // Successful login, redirect to main page
-            header("Location: dashboard.html");
+            header("Location: dashboard.php");
             exit(); // Important to exit after redirection
         } else {
             echo "Incorrect password. <a href='login.html'>Try again</a>.";
