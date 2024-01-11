@@ -72,6 +72,9 @@ $conn->close();
                 }
                 ?>
 
+                <!-- "Go Back" button -->
+                <button type="button" class="btn btn-secondary mb-3" onclick="goBack()">Go Back</button>
+
                 <form method="POST" action="">
                     <div class="mb-3">
                         <label for="complaint_type" class="form-label">Complaint Type</label>
@@ -99,6 +102,13 @@ $conn->close();
 
     <!-- Bootstrap JS scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- JavaScript function to go back to the previous page -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </body>
 
 </html>

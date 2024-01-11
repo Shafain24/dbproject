@@ -39,24 +39,26 @@
       <div class="row justify-content-center">
         <div class="col-lg-6">
           <h1 class="text-center mb-4">Welcome!</h1>
-          <form>
+          <form action="login.php" method="post">
             <div class="form-floating mb-3">
               <input
-                type="email"
+                type="text"
                 class="form-control"
-                id="floatingInputEmail"
+                id="roll_no"
                 placeholder="2021F-BCE-001"
+                name="roll_no"
               />
-              <label for="floatingInputEmail">Roll-No</label>
+              <label for="roll_no">Roll-No</label>
             </div>
             <div class="form-floating">
               <input
                 type="password"
                 class="form-control"
-                id="floatingPassword"
+                id="password"
                 placeholder="Password"
+                name="password"
               />
-              <label for="floatingPassword">Password</label>
+              <label for="password">Password</label>
             </div>
             <button type="submit" class="btn btn-primary btn-block mt-4">
               Login

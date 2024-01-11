@@ -60,7 +60,7 @@ $conn->close();
               <a class="nav-link active" href="#"> View Complaints </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="#"> Pending Complaints </a>
+              <a class="nav-link " href="logout.php"> Logout </a>
             </li>
 
             <!-- Add more sidebar options as needed -->
@@ -84,7 +84,6 @@ $conn->close();
           </form>
         </div>
 
-        <!-- Display search results -->
         <!-- Display search results -->
         <div class="row">
           <?php
