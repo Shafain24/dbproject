@@ -37,9 +37,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         $success_message = "Complaint filed successfully. Your Complaint ID is: $complaint_id. Please use this ID to check the status.";
+        // Set a session variable to store the success message
+        $_SESSION['success_message'] = $success_message;
     } else {
         $error_message = "Error: " . $sql . "<br>" . $conn->error;
+        // Set a session variable to store the error message
+        $_SESSION['error_message'] = $error_message;
     }
+
+    // Redirect to the same page to prevent form resubmission on page refresh
+    header("Location: {$_SERVER['PHP_SELF']}?device_id=$device_id");
+    exit();
 }
 
 // Close the database connection
@@ -65,10 +73,13 @@ $conn->close();
                 <h2 class="mb-4">File a Complaint</h2>
 
                 <?php
-                if (isset($success_message)) {
-                    echo '<div class="alert alert-success" role="alert">' . $success_message . '</div>';
-                } elseif (isset($error_message)) {
-                    echo '<div class="alert alert-danger" role="alert">' . $error_message . '</div>';
+                // Display success or error message if set
+                if (isset($_SESSION['success_message'])) {
+                    echo '<div class="alert alert-success" role="alert">' . $_SESSION['success_message'] . '</div>';
+                    unset($_SESSION['success_message']); // Clear the session variable
+                } elseif (isset($_SESSION['error_message'])) {
+                    echo '<div class="alert alert-danger" role="alert">' . $_SESSION['error_message'] . '</div>';
+                    unset($_SESSION['error_message']); // Clear the session variable
                 }
                 ?>
 
@@ -87,7 +98,7 @@ $conn->close();
 
                     <div class="mb-3">
                         <label for="complaint_details" class="form-label">Complaint Details</label>
-                        <textarea class="form-control" name="complaint_details" rows="5" required></textarea>
+                        <textarea class="form-control" name="complaint_details" rows="5" required placeholder="Write a brief description"></textarea>
                     </div>
 
                     <!-- Hidden input fields for roll_no and device_id -->
