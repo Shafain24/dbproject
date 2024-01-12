@@ -1,3 +1,37 @@
+<?php
+// Replace these with your actual database credentials
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "complainproject";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Initialize $searchDeviceID variable
+$searchDeviceID = '';
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    // Retrieve the search term from the form
+    $searchDeviceID = $_GET['searchDeviceID'];
+
+    // Perform the search based on device_id or complaint_id
+    // Customize this query based on your table structure
+    $sql = "SELECT * FROM user_complaints WHERE Device_ID LIKE '%$searchDeviceID%' OR Complaint_ID LIKE '%$searchDeviceID%'";
+    $result = $conn->query($sql);
+
+    // Handle the result as needed
+    // You can loop through $result to display the search results
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,21 +75,30 @@
                 <!-- Search bar for device ID -->
                 <div class="mb-3">
                     <form class="d-flex" method="GET">
-                        <input class="form-control me-2" type="search" placeholder="Search by Device ID" aria-label="Search" name="searchDeviceID" value="<?php echo $searchDeviceID; ?>" />
+                        <input class="form-control me-2" type="search" placeholder="Search by Device ID or Complaint ID" aria-label="Search" name="searchDeviceID" value="<?php echo $searchDeviceID; ?>" />
                         <button class="btn btn-outline-success" type="submit">
                             Search
                         </button>
                     </form>
                 </div>
 
-                <!-- Sample complaint data, replace with actual data from your backend -->
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Device Name: Device123</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Submitted by: John Doe</h6>
-                        <a href="complaint-details.html" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
+                <?php
+                // Handle search results
+                if ($result && $result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo '
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Device Name: ' . $row['Device_ID'] . '</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Submitted by: ' . $row['Roll_No'] . '</h6>
+                                <a href="complaint-details.html" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>';
+                    }
+                } else {
+                    echo '<p>No complaints found.</p>';
+                }
+                ?>
 
                 <!-- Add more cards as needed -->
             </main>
@@ -66,3 +109,7 @@
 </body>
 
 </html>
+<?php
+// Close the database connection
+$conn->close();
+?>
