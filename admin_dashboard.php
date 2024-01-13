@@ -16,8 +16,11 @@ if ($conn->connect_error) {
 // Initialize $searchDeviceID variable
 $searchDeviceID = '';
 
+// Initialize $result to null
+$result = null;
+
 // Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['searchDeviceID'])) {
     // Retrieve the search term from the form
     $searchDeviceID = $_GET['searchDeviceID'];
 
@@ -28,9 +31,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     // Handle the result as needed
     // You can loop through $result to display the search results
-}
+} else {
+    // If no search is performed, retrieve all complaints
+    $sql = "SELECT * FROM user_complaints";
+    $result = $conn->query($sql);
 
+    // Handle the result as needed
+    // You can loop through $result to display all complaints
+}
 ?>
+
+<!-- Rest of your HTML code remains unchanged -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -86,12 +97,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 // Handle search results
                 if ($result && $result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
+                        // Build the URL with parameters
+                        $viewDetailsURL = 'solvecomplaint.php?Device_ID=' . urlencode($row['Device_ID']) .
+                            '&Roll_No=' . urlencode($row['Roll_No']) .
+                            '&Complaint_ID=' . urlencode($row['Complaint_ID']) .
+                            '&Status=' . urlencode($row['Status']) .
+                            '&Complaint_Type=' . urlencode($row['Complaint_Type']) .
+                            '&Complaint_Info=' . urlencode($row['Complaint_Issue']);
+
                         echo '
                         <div class="card mb-3">
                             <div class="card-body">
                                 <h5 class="card-title">Device Name: ' . $row['Device_ID'] . '</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Submitted by: ' . $row['Roll_No'] . '</h6>
-                                <a href="complaint-details.html" class="btn btn-primary">View Details</a>
+                                <a href="' . $viewDetailsURL . '" class="btn btn-primary">View Details</a>
                             </div>
                         </div>';
                     }
