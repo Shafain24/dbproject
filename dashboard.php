@@ -57,7 +57,7 @@ $conn->close();
               <a class="nav-link" href="dashboard.php"> Home </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="view_complaint.php"> View Complaints </a>
+              <a class="nav-link active" href="view_complaint.php"> Complant Status </a>
             </li>
             <li class="nav-item">
               <a class="nav-link " href="logout.php"> Logout </a>
