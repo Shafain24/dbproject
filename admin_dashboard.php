@@ -26,22 +26,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['searchDeviceID'])) {
 
     // Perform the search based on device_id or complaint_id
     // Customize this query based on your table structure
-    $sql = "SELECT * FROM user_complaints WHERE Device_ID LIKE '%$searchDeviceID%' OR Complaint_ID LIKE '%$searchDeviceID%'";
+    $sql = "SELECT * FROM user_complaints WHERE (Device_ID LIKE '%$searchDeviceID%' OR Complaint_ID LIKE '%$searchDeviceID%') AND Status != 'Resolved'";
     $result = $conn->query($sql);
 
     // Handle the result as needed
     // You can loop through $result to display the search results
 } else {
-    // If no search is performed, retrieve all complaints
-    $sql = "SELECT * FROM user_complaints";
+    // If no search is performed, retrieve only unresolved complaints
+    $sql = "SELECT * FROM user_complaints WHERE Status != 'Resolved'";
     $result = $conn->query($sql);
 
     // Handle the result as needed
     // You can loop through $result to display all complaints
 }
 ?>
-
-<!-- Rest of your HTML code remains unchanged -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -125,6 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['searchDeviceID'])) {
 </body>
 
 </html>
+
 <?php
 // Close the database connection
 $conn->close();

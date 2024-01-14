@@ -83,6 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['resolve'])) {
         <?php else : ?>
             <p>No details found for the provided complaint ID.</p>
         <?php endif; ?>
+        <a class="btn btn-secondary mt-3" href="admin_dashboard.php">Back</a>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
