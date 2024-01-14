@@ -1,27 +1,27 @@
 <?php
-// Replace these with your actual database credentials
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "complainproject";
 
-// Create connection
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if complaint ID is provided in the URL
+
 if (isset($_GET['Complaint_ID'])) {
     $complaintID = $_GET['Complaint_ID'];
 
-    // Retrieve complaint details
+
     $sql = "SELECT * FROM user_complaints WHERE Complaint_ID = '$complaintID'";
     $result = $conn->query($sql);
 
-    // Check if complaint exists
+
     if ($result && $result->num_rows > 0) {
         $complaintDetails = $result->fetch_assoc();
     } else {
@@ -31,12 +31,12 @@ if (isset($_GET['Complaint_ID'])) {
     $complaintDetails = null;
 }
 
-// Update complaint status if the "Resolve" button is clicked
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['resolve'])) {
     $resolveSQL = "UPDATE user_complaints SET Status = 'Resolved' WHERE Complaint_ID = '$complaintID'";
     $conn->query($resolveSQL);
 
-    // Redirect back to home page after resolving
+
     header("Location: admin_dashboard.php");
     exit();
 }
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['resolve'])) {
                     <p class="card-text">Status: <?php echo $complaintDetails['Status']; ?></p>
 
                     <?php if ($complaintDetails['Status'] != 'Resolved') : ?>
-                        <!-- "Resolve" button only if status is not already resolved -->
+
                         <form method="POST">
                             <button type="submit" class="btn btn-primary" name="resolve">Resolve</button>
                         </form>
@@ -93,6 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['resolve'])) {
 </html>
 
 <?php
-// Close the database connection
+
 $conn->close();
 ?>
