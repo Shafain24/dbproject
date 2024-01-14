@@ -13,9 +13,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if complaint ID is provided in the URL<?php
-// ... (same code as before)
-
 // Check if complaint ID is provided in the URL
 if (isset($_GET['Complaint_ID'])) {
     $complaintID = $_GET['Complaint_ID'];
@@ -38,14 +35,12 @@ if (isset($_GET['Complaint_ID'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['resolve'])) {
     $resolveSQL = "UPDATE user_complaints SET Status = 'Resolved' WHERE Complaint_ID = '$complaintID'";
     $conn->query($resolveSQL);
-    // Redirect back to complaint details page after updating status
-    header("Location: solvecomplaint.php?complaintID=$complaintID");
+
+    // Redirect back to home page after resolving
+    header("Location: admin_dashboard.php");
     exit();
 }
 ?>
-
-<!-- Rest of the HTML code remains unchanged -->
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['resolve'])) {
                 <div class="card-body">
                     <h5 class="card-title">Device Name: <?php echo $complaintDetails['Device_ID']; ?></h5>
                     <h6 class="card-subtitle mb-2 text-muted">Submitted by: <?php echo $complaintDetails['Roll_No']; ?></h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Complaint-ID: <?php echo $complaintDetails['Complaint_ID']; ?></h6>
                     <p class="card-text">Complaint Type: <?php echo $complaintDetails['Complaint_Type']; ?></p>
                     <p class="card-text">Description: <?php echo $complaintDetails['Complaint_Issue']; ?></p>
                     <p class="card-text">Status: <?php echo $complaintDetails['Status']; ?></p>
@@ -80,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['resolve'])) {
                         <!-- "Resolve" button only if status is not already resolved -->
                         <form method="POST">
                             <button type="submit" class="btn btn-primary" name="resolve">Resolve</button>
-
                         </form>
                     <?php endif; ?>
                 </div>

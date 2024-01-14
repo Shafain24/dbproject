@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_query($conn, $insert_user_sql);
 
             // Registration successful, redirect to login page
-            header("Location:login.html");
+            header("Location:signup.html");
             exit();
         }
     } else {
