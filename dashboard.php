@@ -50,23 +50,23 @@ $conn->close();
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
-      <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+      <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar nav-pills mt-1 ">
         <div class="position-sticky">
-          <ul class="nav flex-column ">
+          <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link" href="dashboard.php"> Home </a>
+              <a class="nav-link active" aria-current="page" href="dashboard.php"> Home </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="view_complaint.php"> Complant Status </a>
+              <a class="nav-link" href="view_complaint.php"> Complaint Status </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="logout.php"> Logout </a>
+              <a class="nav-link" href="logout.php"> Logout </a>
             </li>
-
             <!-- Add more sidebar options as needed -->
           </ul>
         </div>
       </nav>
+
 
       <!-- Main content area -->
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">

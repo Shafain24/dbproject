@@ -67,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['resolve'])) {
                 <div class="card-body">
                     <h5 class="card-title">Device Name: <?php echo $complaintDetails['Device_ID']; ?></h5>
                     <h6 class="card-subtitle mb-2 text-muted">Submitted by: <?php echo $complaintDetails['Roll_No']; ?></h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Complaint-ID: <?php echo $complaintDetails['Complaint_ID']; ?></h6>
                     <p class="card-text">Complaint Type: <?php echo $complaintDetails['Complaint_Type']; ?></p>
                     <p class="card-text">Description: <?php echo $complaintDetails['Complaint_Issue']; ?></p>
                     <p class="card-text">Status: <?php echo $complaintDetails['Status']; ?></p>

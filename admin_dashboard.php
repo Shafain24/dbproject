@@ -62,21 +62,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['searchDeviceID'])) {
 
     <div class="container-fluid">
         <div class="row">
-            <nav class="d-md-block col-lg-2 col-md-3 bg-light">
+            <nav class="d-md-block col-lg-2 col-md-3 bg-light nav-underline">
                 <div class="position-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Reports</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link ">Logout
-                                <?php
-                                header('location:adminentry.html')
-                                ?>
-                            </a>
+                            <a class="nav-link" href="adminentry.html">Logout</a>
                         </li>
                     </ul>
                 </div>
