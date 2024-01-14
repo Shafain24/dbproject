@@ -13,9 +13,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if complaint ID is provided in the URL<?php
-// ... (same code as before)
-
 // Check if complaint ID is provided in the URL
 if (isset($_GET['Complaint_ID'])) {
     $complaintID = $_GET['Complaint_ID'];
@@ -38,14 +35,12 @@ if (isset($_GET['Complaint_ID'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['resolve'])) {
     $resolveSQL = "UPDATE user_complaints SET Status = 'Resolved' WHERE Complaint_ID = '$complaintID'";
     $conn->query($resolveSQL);
-    // Redirect back to complaint details page after updating status
-    header("Location: solvecomplaint.php?complaintID=$complaintID");
+
+    // Redirect back to home page after resolving
+    header("Location: admin_dashboard.php");
     exit();
 }
 ?>
-
-<!-- Rest of the HTML code remains unchanged -->
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -80,7 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['resolve'])) {
                         <!-- "Resolve" button only if status is not already resolved -->
                         <form method="POST">
                             <button type="submit" class="btn btn-primary" name="resolve">Resolve</button>
-
                         </form>
                     <?php endif; ?>
                 </div>

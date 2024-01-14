@@ -72,7 +72,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['searchDeviceID'])) {
                             <a class="nav-link" href="#">Reports</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" aria-disabled="true">Settings</a>
+                            <a class="nav-link ">Logout
+                                <?php
+                                header('location:adminentry.html')
+                                ?>
+                            </a>
                         </li>
                     </ul>
                 </div>
