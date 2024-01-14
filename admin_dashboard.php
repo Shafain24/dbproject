@@ -1,43 +1,34 @@
 <?php
-// Replace these with your actual database credentials
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "complainproject";
 
-// Create connection
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Initialize $searchDeviceID variable
+
 $searchDeviceID = '';
 
-// Initialize $result to null
 $result = null;
 
-// Check if the form is submitted
+
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['searchDeviceID'])) {
-    // Retrieve the search term from the form
+
     $searchDeviceID = $_GET['searchDeviceID'];
 
-    // Perform the search based on device_id or complaint_id
-    // Customize this query based on your table structure
+
     $sql = "SELECT * FROM user_complaints WHERE (Device_ID LIKE '%$searchDeviceID%' OR Complaint_ID LIKE '%$searchDeviceID%') AND Status != 'Resolved'";
     $result = $conn->query($sql);
-
-    // Handle the result as needed
-    // You can loop through $result to display the search results
 } else {
-    // If no search is performed, retrieve only unresolved complaints
     $sql = "SELECT * FROM user_complaints WHERE Status != 'Resolved'";
     $result = $conn->query($sql);
-
-    // Handle the result as needed
-    // You can loop through $result to display all complaints
 }
 ?>
 
@@ -78,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['searchDeviceID'])) {
                     <h2>Admin Dashboard</h2>
                 </div>
 
-                <!-- Search bar for device ID -->
+                <!-- Search bar -->
                 <div class="mb-3">
                     <form class="d-flex" method="GET">
                         <input class="form-control me-2" type="search" placeholder="Search by Device ID or Complaint ID" aria-label="Search" name="searchDeviceID" value="<?php echo $searchDeviceID; ?>" />
@@ -89,10 +80,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['searchDeviceID'])) {
                 </div>
 
                 <?php
-                // Handle search results
+                //  search results
                 if ($result && $result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        // Build the URL with parameters
+
                         $viewDetailsURL = 'solvecomplaint.php?Device_ID=' . urlencode($row['Device_ID']) .
                             '&Roll_No=' . urlencode($row['Roll_No']) .
                             '&Complaint_ID=' . urlencode($row['Complaint_ID']) .
@@ -114,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['searchDeviceID'])) {
                 }
                 ?>
 
-                <!-- Add more cards as needed -->
+
             </main>
         </div>
     </div>
@@ -125,6 +116,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['searchDeviceID'])) {
 </html>
 
 <?php
-// Close the database connection
+
 $conn->close();
 ?>

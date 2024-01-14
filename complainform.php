@@ -1,10 +1,8 @@
 <?php
-// Start the session
+
 session_start();
 
-// Check if the user is logged in
 
-// Connect to the database (replace these values with your database credentials)
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -12,45 +10,45 @@ $dbname = "complainProject";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check the connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Retrieve user information from the session
-$user_roll_no = $_SESSION['roll_no']; // Assuming you set this session variable during login
 
-// Retrieve device_id from URL parameters
+$user_roll_no = $_SESSION['roll_no'];
+
+
 $device_id = $_GET['device_id'];
 
-// Process the complaint form submission
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve other form data
+
     $complaint_type = $_POST["complaint_type"];
     $complaint_details = $_POST["complaint_details"];
 
-    // Generate a unique 5-digit Complaint_ID
+
     $complaint_id = sprintf('%05d', rand(1, 99999));
 
-    // Insert the complaint into the database
+
     $sql = "INSERT INTO user_complaints (Roll_No, Device_ID, Complaint_Type, Complaint_Issue, Status, Complaint_ID) VALUES ('$user_roll_no', '$device_id', '$complaint_type', '$complaint_details', 'Pending', '$complaint_id')";
 
     if ($conn->query($sql) === TRUE) {
         $success_message = "Complaint filed successfully. Your Complaint ID is: $complaint_id. Please use this ID to check the status.";
-        // Set a session variable to store the success message
+
         $_SESSION['success_message'] = $success_message;
     } else {
         $error_message = "Error: " . $sql . "<br>" . $conn->error;
-        // Set a session variable to store the error message
+
         $_SESSION['error_message'] = $error_message;
     }
 
-    // Redirect to the same page to prevent form resubmission on page refresh
+
     header("Location: {$_SERVER['PHP_SELF']}?device_id=$device_id");
     exit();
 }
 
-// Close the database connection
+
 $conn->close();
 ?>
 
@@ -73,13 +71,13 @@ $conn->close();
                 <h2 class="mb-4">File a Complaint</h2>
 
                 <?php
-                // Display success or error message if set
+
                 if (isset($_SESSION['success_message'])) {
                     echo '<div class="alert alert-success" role="alert">' . $_SESSION['success_message'] . '</div>';
-                    unset($_SESSION['success_message']); // Clear the session variable
+                    unset($_SESSION['success_message']);
                 } elseif (isset($_SESSION['error_message'])) {
                     echo '<div class="alert alert-danger" role="alert">' . $_SESSION['error_message'] . '</div>';
-                    unset($_SESSION['error_message']); // Clear the session variable
+                    unset($_SESSION['error_message']);
                 }
                 ?>
 
@@ -101,7 +99,6 @@ $conn->close();
                         <textarea class="form-control" name="complaint_details" rows="5" required placeholder="Write a brief description"></textarea>
                     </div>
 
-                    <!-- Hidden input fields for roll_no and device_id -->
                     <input type="hidden" name="roll_no" value="<?php echo $user_roll_no; ?>">
                     <input type="hidden" name="device_id" value="<?php echo $device_id; ?>">
 
@@ -116,7 +113,7 @@ $conn->close();
 
     <script>
         function goToHomePage() {
-            window.location.href = 'dashboard.php'; // Change '/home' to the actual URL of your home page
+            window.location.href = 'dashboard.php';
         }
     </script>
 </body>
